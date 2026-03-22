@@ -57,10 +57,10 @@ FROM cumulative_deciles;
 -- Insights:
 -- Our top 10% customers account for 38.5% of all our revenue
 -- Our top 20% customers account for 53.8% of all our revenue
--- This shows we have a strong "whale" presence
+-- This shows we have a strong revenue concentration among high-value buyers
 
 
--- How many customers fall into 1 order, 2–3 orders, and 4+ orders
+-- How many customers fall into 1 order, 2, 3 orders, and other orders,
 WITH customer_order_counts AS (
     SELECT customer_unique_id, COUNT(*) as number_of_orders
     FROM customers
