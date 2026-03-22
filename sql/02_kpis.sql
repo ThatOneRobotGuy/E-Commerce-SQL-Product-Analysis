@@ -104,8 +104,10 @@ FROM customer_retention;
 -- Insights:
 -- Only 3.11% of all our customers have returned, this seems very low
 
--- First purchase month cohort Retention
 
+-- Question: First purchase month cohort Retention
+
+-- What cohort is each customer in
 WITH customer_cohort AS (
     SELECT 
         c.customer_unique_id,
@@ -115,6 +117,7 @@ WITH customer_cohort AS (
     GROUP BY c.customer_unique_id
 ),
 
+-- customers and what months they're active (making an order)
 customer_activity AS (
     SELECT 
         c.customer_unique_id,
@@ -123,6 +126,7 @@ customer_activity AS (
     JOIN customers c ON o.customer_id = c.customer_id
 ),
 
+-- Customers, their cohort, and how many months after their first purchase they're active
 cohort_data AS (
     SELECT 
         cc.cohort_month,
@@ -135,6 +139,7 @@ cohort_data AS (
         ON cc.customer_unique_id = ca.customer_unique_id
 ),
 
+-- How many people in each cohort
 cohort_size AS (
     SELECT 
         cohort_month,
@@ -156,6 +161,7 @@ ORDER BY cd.cohort_month, cd.month_number;
 -- Insights:
 -- What we find is that after the first month, the cohort retention drops off drastically
 -- Each month after initial purchase, we often see less than 0.5% of our cohort return
+
 -- This seems to indicate that customers are very unlikely to visit monthly, explanation is 
 -- likely a combination of the nature of the marketplace, but also poor retention
 
